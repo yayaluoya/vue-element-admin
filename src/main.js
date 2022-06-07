@@ -19,6 +19,7 @@ import './permission' // permission control
 import './utils/error-log' // error log
 
 import * as filters from './filters' // global filters
+import { UserDataProxy } from './localData/UserDataProxy'
 
 /**
  * If you don't want to use mock-server
@@ -51,3 +52,7 @@ new Vue({
   store,
   render: h => h(App)
 })
+
+UserDataProxy.instance.setData({
+  name: 'yayaluoya',
+});

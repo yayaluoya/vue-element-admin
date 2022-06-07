@@ -1,0 +1,89 @@
+import { httpStatus } from "@/utils/httpStatus";
+import { BaseApiCon as BaseApiCon_ } from "yayaluoya-tool/dist/http/BaseApiCon";
+import { ResData } from "yayaluoya-tool/dist/http/ResData";
+
+/**
+ * 基类api控制器
+ */
+export class BaseApiCon extends BaseApiCon_ {
+
+    /** 可配置选项 */
+    get op() {
+        return {
+            baseURL: '',
+            timeout: 1000 * 60,
+        };
+    }
+
+    /** 获取数据中的数据 */
+    axiosDataData(op) {
+        return this.axiosData(op).then(({ data }) => data);
+    }
+
+
+    /**
+     * get请求获取数据
+     * @param _op 请求配置 
+     * @param data 
+     * @param headers 
+     * @returns 
+     */
+    getData(_op) {
+        return this.axiosDataData({
+            ..._op,
+            method: 'get',
+        });
+    }
+    /**
+     * post请求获取数据
+     * @param _op 请求配置 
+     * @param data 
+     * @param headers 
+     * @returns 
+     */
+    postData(_op) {
+        return this.axiosDataData({
+            ..._op,
+            method: 'post',
+        });
+    }
+    /**
+     * put请求获取数据
+     * @param _op 请求配置 
+     * @param data 
+     * @param headers 
+     * @returns 
+     */
+    putData(_op) {
+        return this.axiosDataData({
+            ..._op,
+            method: 'put',
+        });
+    }
+    /**
+     * delete请求获取数据
+     * @param _op 请求配置 
+     * @param data 
+     * @param headers 
+     * @returns 
+     */
+    deleteData(_op) {
+        return this.axiosDataData({
+            ..._op,
+            method: 'delete',
+        });
+    }
+
+    /** 
+     * 响应数据获取
+     * 如果响应成功的话返回 ResData
+     * 如果响应失败的话抛出ResData的异常
+     */
+    resData_(data, con, res) {
+        let resData = new ResData(data?.data, data?.code, data?.msg, data?.time);
+        if (resData.status != httpStatus.OK) {
+            throw resData;
+        }
+        return resData;
+    }
+}
