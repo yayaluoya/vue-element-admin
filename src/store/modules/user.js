@@ -32,8 +32,10 @@ const actions = {
   login({ commit }, userInfo) {
     const { username, password } = userInfo
     return new Promise((resolve, reject) => {
+      //TODO 注意
       commit('SET_TOKEN', '')
       setToken('')
+      //
       resolve()
     })
   },
@@ -41,7 +43,12 @@ const actions = {
   // get user info
   getInfo({ commit, state }) {
     return new Promise((resolve, reject) => {
-      const data = {};
+      //TODO 注意
+      const data = {
+        roles: ['admin'],
+        name: 'admin用户',
+        avatar: 'https://wpimg.wallstcn.com/69a1c46c-eb1c-4b46-8bd4-e9e686ef5251.png',
+      };
 
       if (!data) {
         reject('Verification failed, please Login again.')

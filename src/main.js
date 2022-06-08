@@ -17,9 +17,9 @@ import router from './router'
 import './icons' // icon
 import './permission' // permission control
 import './utils/error-log' // error log
+import './handleApp'//添加一些特殊的组件
 
 import * as filters from './filters' // global filters
-import { UserDataProxy } from './localData/UserDataProxy'
 
 /**
  * If you don't want to use mock-server
@@ -52,7 +52,3 @@ new Vue({
   store,
   render: h => h(App)
 })
-
-UserDataProxy.instance.setData({
-  name: 'yayaluoya',
-});

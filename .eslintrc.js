@@ -17,5 +17,6 @@ module.exports = {
     "no-unused-vars": "off",
     "no-unreachable": "off",
     "vue/html-self-closing": "off",
+    "no-async-promise-executor": "off",
   }
 }
