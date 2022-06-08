@@ -1,5 +1,5 @@
 import { httpStatus } from "@/utils/httpStatus";
-import { BaseApiCon as BaseApiCon_ } from "yayaluoya-tool/dist/http/BaseApiCon";
+import { BaseApiCon as BaseApiCon_ } from "yayaluoya-tool/dist/node/BaseApiCon";
 import { ResData } from "yayaluoya-tool/dist/http/ResData";
 
 /**
@@ -10,14 +10,14 @@ export class BaseApiCon extends BaseApiCon_ {
     /** 可配置选项 */
     get op() {
         return {
-            baseURL: '',
+            baseURL: process.env.VUE_APP_BASE_API,
             timeout: 1000 * 60,
         };
     }
 
     /** 获取数据中的数据 */
-    axiosDataData(op) {
-        return this.axiosData(op).then(({ data }) => data);
+    requestDataData(op) {
+        return this.requestData(op).then(({ data }) => data);
     }
 
 
@@ -29,7 +29,7 @@ export class BaseApiCon extends BaseApiCon_ {
      * @returns 
      */
     getData(_op) {
-        return this.axiosDataData({
+        return this.requestDataData({
             ..._op,
             method: 'get',
         });
@@ -42,7 +42,7 @@ export class BaseApiCon extends BaseApiCon_ {
      * @returns 
      */
     postData(_op) {
-        return this.axiosDataData({
+        return this.requestDataData({
             ..._op,
             method: 'post',
         });
@@ -55,7 +55,7 @@ export class BaseApiCon extends BaseApiCon_ {
      * @returns 
      */
     putData(_op) {
-        return this.axiosDataData({
+        return this.requestDataData({
             ..._op,
             method: 'put',
         });
@@ -68,7 +68,7 @@ export class BaseApiCon extends BaseApiCon_ {
      * @returns 
      */
     deleteData(_op) {
-        return this.axiosDataData({
+        return this.requestDataData({
             ..._op,
             method: 'delete',
         });
@@ -85,5 +85,9 @@ export class BaseApiCon extends BaseApiCon_ {
             throw resData;
         }
         return resData;
+    }
+
+    async request_(c) {
+        return c;
     }
 }
