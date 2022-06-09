@@ -8,7 +8,11 @@ export class ComApiCon extends BaseApiCon {
     static instance = new ComApiCon();
 
     /** 测试api */
-    testData(data = {}) {
-        return Promise.resolve(data);
+    testData(data = {}, time = 500) {
+        return new Promise((r) => {
+            setTimeout(() => {
+                r(data);
+            }, 500);
+        });
     }
 }

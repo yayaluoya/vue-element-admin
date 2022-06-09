@@ -14,13 +14,21 @@
       :row-key="rowKey"
       :highlight-current-row="highlightCurrentRow"
       @selection-change="
+        //当选择项发生变化时会触发该事件
         (value) => {
           $emit('selectionChange', value);
         }
       "
       @current-change="
+        //当表格的当前行发生变化的时候会触发该事件，如果要高亮当前行，请打开表格的 highlight-current-row 属性
         (val) => {
           $emit('currentChange', val);
+        }
+      "
+      @row-click="
+        //当某一行被点击时会触发该事件
+        (val) => {
+          $emit('rowClick', val);
         }
       "
     >
@@ -69,8 +77,6 @@
 
 <script>
 import Pagination from "./Pagination.vue";
-import playImg from "@/assets/images/play.png";
-import pauseImg from "@/assets/images/pause.png";
 import { comPagination } from "./comPagination";
 export default {
   components: { Pagination },
