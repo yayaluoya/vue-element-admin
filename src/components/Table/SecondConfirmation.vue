@@ -1,24 +1,12 @@
 <template>
-  <el-dialog
-    title="提示"
-    :visible="!!data"
-    width="400px"
-    @close="close"
-  >
+  <!-- 二次确认 -->
+  <el-dialog :title="title" :visible="!!data" :width="width" @close="close">
     <slot />
-    <span
-      slot="footer"
-      class="dialog-footer"
-    >
-      <el-button
-        :loading="loading"
-        @click="close"
-      >取 消</el-button>
-      <el-button
-        type="primary"
-        :loading="loading"
-        @click="submit"
-      >确 定</el-button>
+    <span slot="footer" class="dialog-footer">
+      <el-button :loading="loading" @click="close">取 消</el-button>
+      <el-button :type="comType" :loading="loading" @click="submit"
+        >确 定</el-button
+      >
     </span>
   </el-dialog>
 </template>
@@ -27,7 +15,19 @@
 export default {
   components: {},
   props: {
-    data: Object,
+    title: {
+      type: String,
+      default: "提示",
+    },
+    width: {
+      type: String,
+      default: "500px",
+    },
+    comType: {
+      type: String,
+      default: "primary",
+    },
+    data: [Object, Array, String, Number],
     comF: Function,
   },
   data() {
