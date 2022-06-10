@@ -132,7 +132,7 @@ export default {
         })
       );
       // console.log(width);
-      this.conWidth = width + 20;
+      this.conWidth = Math.max(width + 20, 60);
     },
   },
 };
