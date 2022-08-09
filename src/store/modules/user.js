@@ -1,5 +1,6 @@
 import { getToken, setToken, removeToken } from '@/utils/auth'
 import router, { resetRouter } from '@/router'
+import { TestAC } from '@/api/TestAC'
 
 const state = {
   token: getToken(),
@@ -31,19 +32,23 @@ const actions = {
   // user login
   login({ commit }, userInfo) {
     const { username, password } = userInfo
-    return new Promise((resolve, reject) => {
-      //TODO 注意
-      commit('SET_TOKEN', '')
-      setToken('')
+    //TODO 注意这里是测试接口
+    return TestAC.instance.test({
+      username,
+      password,
+      token: 123456
+    }).then((data) => {
+      //设置用户数据
       //
-      resolve()
-    })
+      commit('SET_TOKEN', data.token);
+      setToken(data.token);
+    });
   },
 
   // get user info
   getInfo({ commit, state }) {
     return new Promise((resolve, reject) => {
-      //TODO 注意
+      //TODO 注意这里是测试数据
       const data = {
         roles: ['admin'],
         name: 'admin用户',

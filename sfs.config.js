@@ -1,7 +1,15 @@
 /**
+ * 带代码提示的获取config的方法
+ * module.exports = getConfig({...});
+ */
+const { getConfig } = require("server-file-sync");
+const fs = require('fs');
+const path = require('path');
+
+/**
  * server-file-sync 的默认配置文件
  */
-module.exports = {
+module.exports = getConfig({
     /** 配置名字 */
     name: '默认配置',
     /** 主机地址 */
@@ -11,9 +19,9 @@ module.exports = {
     /** 用户名 */
     username: 'root',
     /** 私钥密码 */
-    passphrase: '',
+    passphrase: 'asdf',
     /** 私钥字符串 */
-    privateKey: '',
+    privateKey: fs.readFileSync(path.join(__dirname, './.ssh/asdf')),
     /** 同步列表 */
     syncList: [
         // /** key */
@@ -33,4 +41,4 @@ module.exports = {
     ],
     /** 是否监听 */
     watch: false,
-}
+});
