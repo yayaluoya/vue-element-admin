@@ -1,5 +1,5 @@
-import ArrayUtils from "yayaluoya-tool/dist/ArrayUtils";
-import { ObjectUtils } from "yayaluoya-tool/dist/ObjectUtils"
+import { ArrayUtils } from "yayaluoya-tool/dist/ArrayUtils";
+import { ObjectUtils } from "yayaluoya-tool/dist/obj/ObjectUtils"
 
 /**
  * 数组工具

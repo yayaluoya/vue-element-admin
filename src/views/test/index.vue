@@ -7,18 +7,27 @@
 
 <script>
 import { TestAC } from "@/api/TestAC";
+import { ArrayT } from "@/utils/ArrayT";
+import { UserDataProxy } from "@/localData/UserDataProxy";
 export default {
   components: {},
   data() {
     return {};
   },
-  mounted() {},
+  mounted() {
+    console.log(UserDataProxy.instance.data);
+  },
   methods: {
     postData() {
       TestAC.instance
-        .test({
-          a: "fasdfads",
-        })
+        .test(
+          ArrayT.fill(
+            {
+              a: "fasdfads",
+            },
+            10
+          )
+        )
         .then((res) => {
           console.log("请求成功", res);
         })
