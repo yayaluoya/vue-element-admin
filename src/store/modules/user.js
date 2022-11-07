@@ -36,7 +36,6 @@ const actions = {
     return TestAC.instance.test({
       username,
       password,
-      token: 123456
     }).then((data) => {
       //设置用户数据
       //

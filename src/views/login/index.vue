@@ -16,22 +16,18 @@ export default {
   mounted() {},
   methods: {
     login() {
-      TestAC.instance
-        .test("登录")
-        .then(() => {
-          //登录成功
-          this.$store
-            .dispatch("user/login", {
-              username: "",
-              password: "",
-            })
-            .then(() => {
-              this.$router.push({
-                path: "/test",
-              });
-            });
+      //登录成功
+      this.$store
+        .dispatch("user/login", {
+          username: "",
+          password: "",
         })
-        .finally(Mes.handleApiCatch);
+        .then(() => {
+          this.$router.push({
+            path: "/test",
+          });
+        })
+        .catch(Mes.handleApiCatch);
     },
   },
 };

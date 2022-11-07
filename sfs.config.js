@@ -24,20 +24,36 @@ module.exports = getConfig({
     privateKey: fs.readFileSync(path.join(__dirname, './.ssh/asdf')),
     /** 同步列表 */
     syncList: [
-        // /** key */
-        // key: string;
-        // /** 标题 */
-        // title: string;
-        // /** 路径列表 */
-        // paths: {
-        //     /** 本地地址 */
-        //     local: string;
-        //     /** 远程地址 */
-        //     remote: string;
-        //     /** 文件忽略，请注意不支持 Windows 样式的反斜杠作为分隔符*/
-        //     /** import { type Matcher } from 'anymatch'; */
-        //     ignored: Matcher;
-        // }[],
+        {
+            /** key */
+            key: 'pro',
+            /** 标题 */
+            title: '正式服',
+            /** 路径列表 */
+            paths: [
+                {
+                    /** 本地地址 */
+                    local: './dist_pro',
+                    /** 远程地址 */
+                    remote: '',
+                }
+            ],
+        },
+        {
+            /** key */
+            key: 'dev',
+            /** 标题 */
+            title: '测试服',
+            /** 路径列表 */
+            paths: [
+                {
+                    /** 本地地址 */
+                    local: './dist_dev',
+                    /** 远程地址 */
+                    remote: '',
+                }
+            ],
+        },
     ],
     /** 是否监听 */
     watch: false,

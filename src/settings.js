@@ -1,4 +1,9 @@
 module.exports = {
+  /** 版本 */
+  version: '0.0.1',
+  /** 项目英文名，用来给localstorge数据命名的 */
+  enName: 'vue-admin',
+
   title: '管理后台',
 
   /**

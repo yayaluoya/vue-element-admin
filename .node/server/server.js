@@ -2,7 +2,7 @@ const express = require('express');
 const { ResData } = require('./ResData');
 
 const app = express()
-const port = 1235
+const port = 1235;
 
 app.use(express.json()) // for parsing application/json
 app.use(express.urlencoded({ extended: true })) // for parsing application/x-www-form-urlencoded
@@ -35,3 +35,7 @@ app.post('/test', (req, res) => {
 app.listen(port, () => {
     console.log(`http://localhost:${port}`)
 })
+
+module.express = {
+    port,
+};

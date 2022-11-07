@@ -1,9 +1,33 @@
 'use strict'
 const path = require('path')
 const defaultSettings = require('./src/settings.js')
+const child_process = require('child_process');
 
 function resolve(dir) {
   return path.join(__dirname, dir)
+}
+
+class SFSPlugin {
+  sfsKey = '';
+  constructor(op) {
+    this.sfsKey = op.sfsKey;
+  }
+
+  apply(compiler) {
+    compiler.plugin('done', () => {
+      if (this.sfsKey) {
+        setTimeout(() => {
+          child_process.fork(path.join(__dirname, './node_modules/server-file-sync/dist/__bin/index.js'), [
+            '-k',
+            this.sfsKey,
+            '-d'
+          ], {
+            cwd: __dirname,
+          });
+        }, 10);
+      }
+    });
+  }
 }
 
 const name = defaultSettings.title || 'vue Element Admin' // page title
@@ -25,7 +49,7 @@ module.exports = {
    * Detail: https://cli.vuejs.org/config/#publicpath
    */
   publicPath: '/',
-  outputDir: process.env.OUTPUT || 'dist',
+  outputDir: process.env.NODE_KEY ? `dist_${process.env.NODE_KEY}` : 'dist',
   assetsDir: 'static',
   lintOnSave: process.env.NODE_ENV === 'development',
   productionSourceMap: false,
@@ -36,7 +60,7 @@ module.exports = {
       warnings: false,
       errors: true
     },
-    before: require('./mock/mock-server.js')
+    before: require('./.node/mock-server')
   },
   configureWebpack: {
     // provide the app's title in webpack's name field, so that
@@ -46,7 +70,12 @@ module.exports = {
       alias: {
         '@': resolve('src')
       }
-    }
+    },
+    plugins: [
+      new SFSPlugin({
+        sfsKey: process.env.NODE_KEY,
+      })
+    ],
   },
   chainWebpack(config) {
     // it can improve the speed of the first screen, it is recommended to turn on preload

@@ -1,7 +1,16 @@
 <template>
   <!-- 二次确认 -->
-  <el-dialog :title="title" :visible="!!data" :width="width" @close="close">
-    <slot />
+  <el-dialog
+    append-to-body
+    :title="$slots.default ? title : '提示'"
+    :visible="!!data"
+    :width="width"
+    @close="close"
+    class="removeItem"
+  >
+    <slot>
+      <div class="alert" :class="comType">{{ title }}</div>
+    </slot>
     <span slot="footer" class="dialog-footer">
       <el-button :loading="loading" @click="close">取 消</el-button>
       <el-button :type="comType" :loading="loading" @click="submit"
@@ -28,6 +37,7 @@ export default {
       default: "primary",
     },
     data: [Object, Array, String, Number],
+    //TODO 这个方法会自动绑定this
     comF: Function,
   },
   data() {
@@ -48,16 +58,42 @@ export default {
         return;
       }
       this.loading = true;
-      this.comF(this.data).finally(() => {
-        this.loading = false;
-        this.close();
-      });
+      this.comF(this.data)
+        .finally(() => {
+          this.loading = false;
+        })
+        .then(() => {
+          this.close();
+        });
     },
   },
 };
 </script>
 
 <style scoped lang="scss">
+@import "@/styles/element-variables.scss";
 .removeItem {
+  .alert {
+    width: 100%;
+    // font-weight: bold;
+    font-size: 20px;
+    text-align: center;
+
+    &.primary {
+      color: $--color-primary;
+    }
+    &.success {
+      color: $--color-success;
+    }
+    &.info {
+      color: $--color-info;
+    }
+    &.warning {
+      color: $--color-warning;
+    }
+    &.danger {
+      color: $--color-danger;
+    }
+  }
 }
 </style>

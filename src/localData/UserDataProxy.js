@@ -1,4 +1,5 @@
-import { BaseDataProxy } from "yayaluoya-tool/dist/web/localData/BaseDataProxy";
+import { BaseDataProxy } from "./BaseDataProxy";
+
 /**
  * 用户数据
  */

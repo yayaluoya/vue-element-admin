@@ -13,6 +13,10 @@
  
 <script>
 import Editor from "@tinymce/tinymce-vue";
+
+/** 提取富文本图片内容路径 */
+const imgRegExp = /<img.*?src="(.*?)".*?\/>/g;
+
 export default {
   components: { Editor },
   props: {
@@ -25,21 +29,23 @@ export default {
       defalut: "",
     },
     imgUpload: Function,
+    imgRemove: Function,
   },
   data() {
     return {
       init: {
         language_url: "/tinymce/langs/zh-Hans.js", //引入语言包文件
         language: "zh-Hans", //语言类型
-        height: 500,
+        height: 360,
         menubar: false,
         plugins: [
           "advlist autolink lists link charmap print preview anchor",
           "searchreplace visualblocks code fullscreen",
-          "table paste code help wordcount",
+          "table paste code help wordcount image",
         ],
+        toolbar_mode: "sliding",
         toolbar:
-          "undo redo | formatselect | bold italic backcolor | \
+          "undo redo | formatselect | bold italic backcolor | image | \
            alignleft aligncenter alignright alignjustify | \
            bullist numlist outdent indent | removeformat | help",
         images_upload_handler: (blobInfo, success, failure) => {
@@ -63,9 +69,28 @@ export default {
   computed: {
     content_: {
       get() {
-        return this.content;
+        return this.content || "";
       },
       set(value) {
+        let imgs = [...this.content_.matchAll(imgRegExp)]
+          .map((_) => {
+            return _[1] || "";
+          })
+          .filter(Boolean);
+        let onImgs = [...value.matchAll(imgRegExp)]
+          .map((_) => {
+            return _[1] || "";
+          })
+          .filter(Boolean);
+        //提取出两个图片内容的差异
+        imgs
+          .filter((_) => {
+            return !onImgs.includes(_);
+          })
+          .forEach((_) => {
+            this.imgRemove?.(_);
+          });
+        //
         this.$emit("update:content", value);
       },
     },
