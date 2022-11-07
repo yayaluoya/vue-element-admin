@@ -7,6 +7,8 @@ Vue.use(Router)
 import Layout from '@/layout'
 import { handleRouter } from './handleRouter'
 import { Env } from '@/utils/Env'
+import test from './modules/test'
+import login from './modules/login'
 
 /* Router Modules */
 
@@ -36,7 +38,7 @@ import { Env } from '@/utils/Env'
  * a base page that does not have permission requirements
  * all roles can be accessed
  */
-export const constantRoutes = [
+export const constantRoutes = handleRouter([
   {
     path: '/redirect',
     component: Layout,
@@ -48,11 +50,7 @@ export const constantRoutes = [
       }
     ]
   },
-  {
-    path: '/login',
-    component: () => import('@/views/login/index'),
-    hidden: true
-  },
+  ...login,
   {
     path: '/404',
     component: () => import('@/views/error-page/404'),
@@ -63,36 +61,23 @@ export const constantRoutes = [
     name: 'root',
     redirect: '/test',
   },
-]
+])
 
 /**
  * asyncRoutes
  * the routes that need to be dynamically loaded based on user roles
  */
 export const asyncRoutes = handleRouter([
-  {
-    path: '/test',
-    component: Layout,
-    meta: {
-      title: '测试页面',
-    },
-    redirect: '/test/index',
-    children: [
-      {
-        path: 'index',
-        name: 'test_index',
-        component: () => import('@/views/test/index'),
-        meta: {
-          title: '测试页面',
-        },
-      },
-    ],
-  },
+  ...test,
+]);
+
+/** 末尾的路由 */
+export const lastRoutes = handleRouter([
   // 404 page must be placed at the end !!!
   { path: '*', redirect: '/404', hidden: true },
 ]);
 
-Env.dev && console.log('所有路由', [...constantRoutes, ...asyncRoutes]);
+Env.dev && console.log('所有路由', [...constantRoutes, ...asyncRoutes, ...lastRoutes]);
 
 const createRouter = () => new Router({
   // mode: 'history', // require service support
