@@ -17,6 +17,30 @@ export default [
                     title: '测试页面',
                 },
             },
+            {
+                path: 'table',
+                name: 'test_table',
+                component: () => import('@/views/test/table'),
+                meta: {
+                    title: '测试表格',
+                },
+            },
+            {
+                path: 'from',
+                name: 'test_from',
+                component: () => import('@/views/test/from'),
+                meta: {
+                    title: '测试表单',
+                },
+            },
+            {
+                path: 'query',
+                name: 'test_query',
+                component: () => import('@/views/test/query'),
+                meta: {
+                    title: '测试赛选',
+                },
+            },
         ],
     }
 ]

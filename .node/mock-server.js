@@ -1,7 +1,7 @@
 const path = require('path')
 const child_process = require('child_process');
 const createProxyMiddleware = require('http-proxy-middleware');
-const { port } = require('./server/server');
+const { port } = require('./server/port');
 
 module.exports = function (app) {
     // 启动测试server

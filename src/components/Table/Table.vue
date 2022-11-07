@@ -99,8 +99,7 @@
 import Pagination from "./Pagination.vue";
 import { comPagination } from "./comPagination";
 import { exportExcel } from "@/utils/exportExcel";
-import { ArrayUtils } from "yayaluoya-tool/dist/ArrayUtils";
-import { RequestAnimationFrameE } from "@/event/RequestAnimationFrameE";
+import { RequestAnimationFrameE } from "yayaluoya-tool/dist/web/event/RequestAnimationFrameE";
 import { Mes } from "@/utils/Mes";
 import { ApiT } from "@/api/ApiT";
 import { computedStyleMap } from "@/utils/computedStyleMap";
@@ -192,11 +191,10 @@ export default {
     },
   },
   mounted() {
-    RequestAnimationFrameE.I.on("e", this, this.calConWidth);
-    // RequestAnimationFrameE.I.on("e", this, this.splitLineE);
+    RequestAnimationFrameE.instance.on("exec", this, this.calConWidth);
   },
   destroyed() {
-    RequestAnimationFrameE.I.off("e", this);
+    RequestAnimationFrameE.instance.off("exec", this);
   },
   methods: {
     clearSelection() {

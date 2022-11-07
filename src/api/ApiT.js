@@ -1,4 +1,5 @@
 import { comPagination } from "@/components/Table/comPagination";
+import { Mes } from "@/utils/Mes";
 
 /**
  * api工具
@@ -14,6 +15,24 @@ export class ApiT {
             ...query,
         };
     }
+
+    /**
+     * 添加序号处理
+     * @param {*} data 
+     * @param {*} pagination 
+     * @param {*} key 
+     * @returns 
+     */
+    static indexHandle(data, pagination, key = 'index') {
+        if (!pagination) {
+            Mes.error('列表添加序号时必须带有分页数据');
+        }
+        return data.map((_, i) => {
+            _[key] = ApiT.getI(i, pagination);
+            return _;
+        });
+    }
+
 
     /**
      * 获取序号
