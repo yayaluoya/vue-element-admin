@@ -1,6 +1,7 @@
 import { getToken, setToken, removeToken } from '@/utils/auth'
 import router, { resetRouter } from '@/router'
 import { TestAC } from '@/api/TestAC'
+import { UserDataProxy } from '@/localData/UserDataProxy'
 
 const state = {
   token: getToken(),
@@ -37,9 +38,9 @@ const actions = {
       username,
       password,
     }).then((data) => {
-      //设置用户数据
-      //
       commit('SET_TOKEN', data.token);
+      //设置用户数据
+      UserDataProxy.instance.setData(data);
       setToken(data.token);
     });
   },
@@ -78,6 +79,8 @@ const actions = {
     return new Promise((resolve, reject) => {
       commit('SET_TOKEN', '')
       commit('SET_ROLES', [])
+
+      UserDataProxy.instance.setData({});
       removeToken()
       resetRouter()
 

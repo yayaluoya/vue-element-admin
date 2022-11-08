@@ -5,6 +5,7 @@ import NProgress from 'nprogress' // progress bar
 import 'nprogress/nprogress.css' // progress bar style
 import { getToken } from '@/utils/auth' // get token from cookie
 import getPageTitle from '@/utils/get-page-title'
+import { GlobalE } from "yayaluoya-tool/dist/web/event/GlobalE";
 
 NProgress.configure({ showSpinner: false }) // NProgress Configuration
 
@@ -71,4 +72,14 @@ router.beforeEach(async (to, from, next) => {
 router.afterEach(() => {
   // finish progress bar
   NProgress.done()
+})
+
+/**
+ * 退出登录
+ * TODO 
+ */
+GlobalE.instance.on('loginOut', null, () => {
+  store.dispatch("user/logout").finally(() => {
+    router.push(`/login?redirect=${router.currentRoute.fullPath}`);
+  });
 })
