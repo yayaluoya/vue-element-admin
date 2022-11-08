@@ -38,7 +38,7 @@ export default [
                 name: 'test_query',
                 component: () => import('@/views/test/query'),
                 meta: {
-                    title: '测试赛选',
+                    title: '测试筛选',
                 },
             },
         ],
