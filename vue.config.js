@@ -1,33 +1,10 @@
 'use strict'
 const path = require('path')
 const defaultSettings = require('./src/settings.js')
-const child_process = require('child_process');
+const { Vue2Plugin } = require("server-file-sync/dist/node/Vue2Plugin");
 
 function resolve(dir) {
   return path.join(__dirname, dir)
-}
-
-class SFSPlugin {
-  sfsKey = '';
-  constructor(op) {
-    this.sfsKey = op.sfsKey;
-  }
-
-  apply(compiler) {
-    compiler.plugin('done', () => {
-      if (this.sfsKey) {
-        setTimeout(() => {
-          child_process.fork(path.join(__dirname, './node_modules/server-file-sync/dist/__bin/index.js'), [
-            '-k',
-            this.sfsKey,
-            '-d'
-          ], {
-            cwd: __dirname,
-          });
-        }, 10);
-      }
-    });
-  }
 }
 
 const name = defaultSettings.title || 'vue Element Admin' // page title
@@ -72,9 +49,11 @@ module.exports = {
       }
     },
     plugins: [
-      new SFSPlugin({
-        sfsKey: process.env.NODE_KEY,
-      })
+      new Vue2Plugin(
+        require('./sfs.config'),
+        process.env.NODE_KEY ? `${process.env.NODE_KEY}` : [],
+        false,
+      )
     ],
   },
   chainWebpack(config) {
